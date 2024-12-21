@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <div th:replace="~{fragment :: meta}"></div>
+
+        <div th:replace="~{fragment :: styles}"></div>
+
+        <title>お支払い方法</title>
+    </head>
+    <body>
+        <div class="nagoyameshi-wrapper">
+            <div th:replace="~{fragment :: header}"></div>
+
+            <main>
+                <div class="container pb-5 nagoyameshi-container">
+                    <div class="row justify-content-center">
+                        <div class="col-xl-5 col-lg-6 col-md-8">
+							<!-- パンくずリスト -->
+                            <nav class="my-3" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                                <ol class="breadcrumb mb-0">
+                                    <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">お支払い方法</li>
+                                </ol>
+                            </nav>
+
+                            <h1 class="mb-3 text-center">お支払い方法</h1>
+
+							<!-- 現在のカード情報表示 -->
+                            <div class="container mb-4">
+                                <div class="row pb-2 mb-2 border-bottom">
+                                    <div class="col-3">
+                                        <span class="fw-bold">カード種別</span>
+                                    </div>
+
+                                    <div class="col">
+                                        <span th:text="${card.brand}"></span>
+                                    </div>
+                                </div>
+
+                                <div class="row pb-2 mb-2 border-bottom">
+                                    <div class="col-3">
+                                        <span class="fw-bold">カード名義人</span>
+                                    </div>
+
+                                    <div class="col">
+                                        <span th:text="${cardHolderName}"></span>
+                                    </div>
+                                </div>
+
+                                <div class="row pb-2 mb-2 border-bottom">
+                                    <div class="col-3">
+                                        <span class="fw-bold">カード番号</span>
+                                    </div>
+
+                                    <div class="col">
+                                        <span th:text="${'**** **** **** ' + card.last4}"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+							<!-- カード情報入力フォーム -->
+                            <form id="cardForm" method="post" th:action="@{/subscription/update}">
+                                <div id="cardHolderNameError"></div>
+                                <input class="form-control mb-3" id="cardHolderName" type="text" placeholder="カード名義人" required>
+
+                                <div id="cardElementError"></div>
+                                <div class="form-control mb-4" id="cardElement" style="height:33.95px;"></div>
+                            </form>
+                            <div class="form-group d-flex justify-content-center my-3">
+                                <button class="btn text-white shadow-sm w-50 nagoyameshi-btn" id="cardButton">変更</button>
+                            </div>
+                            <div class="text-center">
+                              	<a href="#" class="nagoyameshi-link-danger text-center" data-bs-toggle="modal" data-bs-target="#deleteSubscriptionModal">クレジットカード情報の削除<br>（サブスクリプションの解約）</a>
+							</div>
+							
+										
+                            <!-- 削除用モーダル -->
+							<div class="modal fade" id="deleteSubscriptionModal" tabindex="-1" aria-labelledby="deleteSubscriptionModalLabel">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header" style="border-bottom: unset;">
+											<h5 class="modal-title" id="deleteSubscriptionModalLabel">有料プランを解約すると以下の特典を受けられなくなります。本当に解約してもよろしいですか？</h5>
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+										</div>
+										<div class="pb-3 px-3">
+											<div class="card">
+						                        <div class="card-header text-center">
+						                        	有料プランの内容
+						                        </div>
+						                        <ul class="list-group list-group-flush">
+						                        	<li class="list-group-item">・当日の2時間前までならいつでも予約可能</li>
+						                        	<li class="list-group-item">・店舗をお好きなだけお気に入りに追加可能</li>
+						                        	<li class="list-group-item">・レビューを全件閲覧可能</li>
+						                        	<li class="list-group-item">・レビューを投稿可能</li>
+						                        	<li class="list-group-item">・月額たったの300円</li>
+						                       </ul>
+						                    </div>
+						                </div>
+										<div class="modal-footer">
+											<form method="post"th:action="@{/subscription/delete}">
+												<button type="submit" class="btn nagoyameshi-btn-danger text-white shadow-sm">解約</button>
+											</form>
+										</div>
+									</div>
+								</div>
+                            </div>
+                            
+                            <!-- テストカードの紹介 -->
+							<div class="p-4 mt-4 text-muted bg-light mb-4">
+								<h3 class="text-center">テストカード</h3>
+								<table class="table text-muted mt-3">
+									<thead>
+										<tr>
+											<th scope="col">カード番号</th>
+											<th scope="col">月/年</th>
+											<th scope="col">セキュリティコード</th>
+											<th scope="col">郵便番号</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>4242424242424242</td>
+											<td>12/34</td>
+											<td>123</td>
+											<td>45678</td>
+										</tr>
+										<tr>
+											<td>5555555555554444</td>
+											<td>12/34</td>
+											<td>123</td>
+											<td>45678</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <div th:replace="~{fragment :: footer}"></div>
+        </div>
+
+        <div th:replace="~{fragment :: scripts}"></div>
+        <script src="https://js.stripe.com/v3"></script>
+        <script th:src="@{/js/stripe.js}"></script>
+    </body>
+</html>

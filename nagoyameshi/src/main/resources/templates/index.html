@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<head>
+		<div th:replace="~{fragment :: meta}"></div>   
+              
+		<div th:replace="~{fragment :: styles}"></div>
+		<title>NAGOYAMESHI</title>
+		
+		<!-- Google Fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Kiwi+Maru&display=swap" rel="stylesheet">
+	</head>
+	<body>
+		<div class="nagoyameshi-wrapper">
+			<div th:replace="~{fragment :: header}"></div>
+			
+			<main>
+				<div class="container pt-4 pb-5 nagoyameshi-container">
+					<!-- メッセージの表示 -->
+					<div th:if="${param.loggedIn}" class="alert alert-info">
+						ログインしました。
+					</div>  
+                     
+					<div th:if="${param.loggedOut}" class="alert alert-info">
+						ログアウトしました。
+					</div>
+					<div th:if="${successMessage}" class="alert alert-info">
+						<span th:text="${successMessage}"></span>
+					</div>
+					
+					<!-- メイン画面 -->
+					<div class="col-xl-8 mx-auto mt-4 mb-2 pt-2">
+						<h1 class="nagoyameshi-top-sentence text-start">――名古屋の街角に息づく、</h1>
+						<h1 class="nagoyameshi-top-sentence text-end">懐かしくも新しい味わい――</h1>
+					</div>
+					
+					<div class="nagoyameshi-scroll-container">
+						<!-- 店舗画像のスクロール -->
+						<div class="nagoyameshi-scroll-images">
+							<img th:src="@{/storage/{image}(image=${image})}" th:each="image : ${images}" alt="店舗画像">
+						</div>
+						<!-- 検索ボックス -->
+						<div class="nagoyameshi-top-search-box">
+							<div class="d-flex justify-content-center">                                            
+								<form method="get" th:action="@{/stores}" class="mb-5 nagoyameshi-search-form">
+									<div class="input-group">
+										<input type="text" class="form-control" name="keyword" th:value="${keyword}" placeholder="店名・カテゴリ名">
+										<button type="submit" class="btn text-white shadow-sm nagoyameshi-btn">検索</button> 
+									</div>               
+								</form>                        
+							</div>
+						</div>
+					</div>
+					
+					<p class="text-center mt-4 ">店名・カテゴリ名で検索するか、下記からカテゴリを選択してください</p>
+					
+					<!-- カテゴリバッチ -->
+					<div class="col-xl-6 mx-auto nagoyameshi-select-view justify-content-center mt-4">
+						<a class="nagoyameshi-category-badge" th:each="category : ${categories20}" th:text="${category.getName()}" th:href="@{/stores/seachCategory?seachCategoryId=__${category.getId()}__}"></a>
+					</div>                                                  
+				</div>
+			</main>
+
+			<!-- フッター -->
+			<div th:replace="~{fragment :: footer}"></div>
+		</div>    
+         
+		<div th:replace="~{fragment :: scripts}"></div>
+		
+		<script src="/js/imagesScrollScript.js"></script>  
+	</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+		<head>
+		<div th:replace="~{fragment :: meta}"></div>   
+              
+		<div th:replace="~{fragment :: styles}"></div>
+		
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+		
+		<title>店舗登録</title>       
+	</head>
+	<body>
+		<div class="nagoyameshi-wrapper">
+			<!-- ヘッダー -->
+			<div th:replace="~{fragment :: header}"></div>
+             
+			<main>
+				<div class="container pt-4 pb-5 nagoyameshi-container">
+					<div class="row justify-content-center">
+						<div class="col-xl-5 col-lg-6 col-md-8">
+							<!-- パンくずリスト -->
+							<nav class="mb-4" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+								<ol class="breadcrumb mb-0"> 
+									<li class="breadcrumb-item"><a th:href="@{/admin/stores}">店舗一覧</a></li>                                                           
+									<li class="breadcrumb-item active" aria-current="page">店舗登録</li>
+								</ol>
+							</nav> 
+                             
+							<h1 class="mb-4 text-center">店舗登録</h1>         
+                             
+                            <!-- 店舗情報登録フォーム -->
+							<form method="post" th:action="@{/admin/stores/create}" th:object="${storeRegisterForm}" enctype="multipart/form-data">                                                            
+								<div class="form-group row mb-3">
+									<div class="col-md-4">
+										<label for="name" class="col-form-label text-md-left fw-bold">店舗名</label>
+									</div>
+									<div class="col-md-8">                                    
+										<div th:if="${#fields.hasErrors('name')}" class="text-danger small mb-2" th:errors="*{name}"></div>                                    
+										<input type="text" class="form-control" th:field="*{name}" autocomplete="off" autofocus>
+									</div>
+								</div>
+
+								<div class="form-group row mb-3">
+									<div class="col-md-4">
+										<label for="categorySelect" class="col-form-label text-md-left fw-bold">カテゴリ</label>
+									</div>
+									<div class="col-md-8">                                    
+										<div th:if="${#fields.hasErrors('categories')}" class="text-danger small mb-2" th:errors="*{categories}"></div>                                    
+										<!-- 選択済みカテゴリのタグ表示 -->
+										<div id="selectedCategories" class="mb-2 nagoyameshi-select-view"></div>
+										<select id="categorySelect" class="form-select" multiple>
+											<th:block th:each="categories : ${categories}">
+												<option th:value="${categories.getId()}" th:text="${categories.getName()}"></option>
+											</th:block>
+										</select>
+										<!-- 選択されたカテゴリの値を格納する隠しフィールド -->
+										<input type="hidden" id="categories" name="categories" th:value="${selectedCategoryIds}" />
+									</div>
+								</div>
+
+								<div class="form-group row mb-3">
+									<div class="col-md-4">
+										<label for="imageFile" class="col-form-label text-md-left fw-bold">店舗画像</label>
+									</div>                                    
+									<div class="col-md-8">
+										<div th:if="${#fields.hasErrors('imageFile')}" class="text-danger small mb-2" th:errors="*{imageFile}"></div>  
+										<input type="file" class="form-control" th:field="*{imageFile}">
+									</div>
+								</div>   
+                                 
+								<!-- 選択された画像の表示場所 -->
+								<div class="row" id="imagePreview"></div>                                 
+                                 
+								<div class="form-group row mb-3">
+									<div class="col-md-4">
+										<label for="description" class="col-form-label text-md-left fw-bold">説明</label>
+									</div>
+									<div class="col-md-8">                            
+										<div th:if="${#fields.hasErrors('description')}" class="text-danger small mb-2" th:errors="*{description}"></div>                                        
+										<textarea class="form-control" th:field="*{description}" cols="30" rows="5"></textarea>
+									</div>
+								</div>
+								
+                                <div class="form-group row mb-3">
+                                    <div class="col-md-4">
+                                        <label for="openHour" class="col-form-label text-md-left fw-bold">営業時間</label>
+                                    </div>
+									<div class="col-md-8">
+										<div th:if="${#fields.hasErrors('openHour')}" class="text-danger small mb-2" th:errors="*{openHour}"></div>
+										<div th:if="${#fields.hasErrors('closedHour')}" class="text-danger small mb-2" th:errors="*{closedHour}"></div>
+										<div class="d-flex justify-content-between align-items-center">
+		                                    <div class="col-md-5">                                                                  
+		                                        <input type="time" class="timepicker form-control" id="openHour" name="openHour" th:field="*{openHour}">
+		                                    </div>
+		                                    <div class="col-md-2 text-center">
+												<span>～</span>
+											</div>
+		                                    <div class="col-md-5">                                        
+		                                        <input type="time" class="timepicker form-control" id="closedHour" name="closedHour" th:field="*{closedHour}">
+		                                    </div>
+	                                    </div>
+									</div>
+                                </div>
+
+                                <div class="form-group row mb-3 align-items-center">
+                                    <div class="col-md-4">
+                                        <p class="col-form-label text-md-left fw-bold">定休日</p>
+                                    </div> 
+                                    <div class="col-md-8">
+                                        <div th:if="${#fields.hasErrors('holidays')}" class="text-danger small mb-2" th:errors="*{holidays}"></div>
+                                        <div class="d-flex justify-content-between">
+	                                        <label class="form-check-label"><input type="checkbox" class="form-check-input" th:field="*{holidays}" value="月"> 月</label>
+								            <label class="form-check-label"><input type="checkbox" class="form-check-input" th:field="*{holidays}" value="火"> 火</label>
+								            <label class="form-check-label"><input type="checkbox" class="form-check-input" th:field="*{holidays}" value="水"> 水</label>
+								            <label class="form-check-label"><input type="checkbox" class="form-check-input" th:field="*{holidays}" value="木"> 木</label>
+								            <label class="form-check-label"><input type="checkbox" class="form-check-input" th:field="*{holidays}" value="金"> 金</label>
+								            <label class="form-check-label"><input type="checkbox" class="form-check-input" th:field="*{holidays}" value="土"> 土</label>
+								            <label class="form-check-label"><input type="checkbox" class="form-check-input" th:field="*{holidays}" value="日"> 日</label>
+								            <label class="form-check-label"><input type="checkbox" class="form-check-input" th:field="*{holidays}" value="なし"> なし</label>                  
+                                    	</div>
+                                    </div>                                    
+                                </div>
+                                
+								<div class="form-group row mb-3 align-items-center">
+                                    <div class="col-md-4">
+                                        <label for="minPrice" class="col-form-label text-md-left fw-bold">価格帯</label>
+                                    </div>
+									<div class="col-md-8">
+										<div th:if="${#fields.hasErrors('minPrice')}" class="text-danger small mb-2" th:errors="*{minPrice}"></div>
+	                                    <div th:if="${#fields.hasErrors('maxPrice')}" class="text-danger small mb-2" th:errors="*{maxPrice}"></div>
+										<div class="d-flex justify-content-between align-items-center">
+		                                    <div class="col-md-5">
+		                                        <input type="number" step="100" min="0" class="form-control" th:field="*{minPrice}">
+											</div>
+											<div class="col-md-2 text-center">
+												<span>～</span>
+											</div>
+											<div class="col-md-5">
+												<input type="number" step="100" min="0" class="form-control" th:field="*{maxPrice}">                                 
+		                                    </div>
+										</div>
+									</div>                                  
+                                </div>
+                                
+								<div class="form-group row mb-3">
+									<div class="col-md-4">
+										<label for="capacity" class="col-form-label text-md-left fw-bold">定員（単位：席）</label>
+									</div> 
+									<div class="col-md-8">
+										<div th:if="${#fields.hasErrors('capacity')}" class="text-danger small mb-2" th:errors="*{capacity}"></div>
+										<input type="number" min="0" class="form-control" th:field="*{capacity}">                                
+									</div>                                    
+								</div>                                                                
+                                                                                                                         
+								<div class="form-group row mb-3">
+									<div class="col-md-4">
+										<label for="postalCode" class="col-form-label text-md-left fw-bold">郵便番号</label>
+									</div>
+									<div class="col-md-8">
+										<div th:if="${#fields.hasErrors('postalCode')}" class="text-danger small mb-2" th:errors="*{postalCode}"></div>
+										<input type="text" class="form-control" th:field="*{postalCode}">
+									</div>
+								</div>
+                                                                                                               
+								<div class="form-group row mb-3">
+									<div class="col-md-4">
+										<label for="address" class="col-form-label text-md-left fw-bold">住所</label>
+									</div>
+									<div class="col-md-8">
+										<div th:if="${#fields.hasErrors('address')}" class="text-danger small mb-2" th:errors="*{address}"></div>
+										<input type="text" class="form-control" th:field="*{address}" autocomplete="street-address">  
+									</div>
+								</div>                                                                                
+                                 
+								<div class="form-group row mb-3">
+									<div class="col-md-4">
+										<label for="phoneNumber" class="col-form-label text-md-left fw-bold">電話番号</label>
+									</div>
+									<div class="col-md-8">
+										<div th:if="${#fields.hasErrors('phoneNumber')}" class="text-danger small mb-2" th:errors="*{phoneNumber}"></div>
+										<input type="text" class="form-control" th:field="*{phoneNumber}">                                
+									</div>
+								</div>
+                                                                                                                         
+                                 
+								<div class="form-group d-flex justify-content-center my-4">
+									<button type="submit" class="btn text-white shadow-sm w-50 nagoyameshi-btn">登録</button>
+								</div>
+							</form>                                                                         
+						</div>
+					</div>
+				</div>                
+			</main>
+             
+			<!-- フッター -->
+			<div th:replace="~{fragment :: footer}"></div>
+		</div>    
+         
+		<div th:replace="~{fragment :: scripts}"></div>
+		 
+		<script th:src="@{/js/preview.js}"></script>
+		<script th:src="@{/js/categorySelect.js}"></script>
+		
+		<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+		<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ja.js"></script>
+		<script th:src="@{/js/timepickr.js}"></script>    
+	</body>
+</html>
