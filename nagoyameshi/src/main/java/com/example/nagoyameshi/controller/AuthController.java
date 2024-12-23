@@ -24,6 +24,9 @@ import com.example.nagoyameshi.service.VerificationTokenService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+/**
+ * ログイン・会員登録・認証コントローラー
+ */
 @Controller
 public class AuthController {
 	private final UserService userService;

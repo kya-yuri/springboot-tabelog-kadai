@@ -16,6 +16,9 @@ import com.example.nagoyameshi.repository.CategoryRepository;
 import com.example.nagoyameshi.repository.StoreCategoryRepository;
 import com.example.nagoyameshi.repository.StoreRepository;
 
+/**
+ * カテゴリ一般を処理するサービス
+ */
 @Service
 public class CategoryService {
 	private final CategoryRepository categoryRepository;

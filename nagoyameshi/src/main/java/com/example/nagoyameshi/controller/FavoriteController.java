@@ -20,6 +20,9 @@ import com.example.nagoyameshi.security.UserDetailsImpl;
 import com.example.nagoyameshi.service.FavoriteService;
 import com.example.nagoyameshi.service.StoreService;
 
+/*
+ * 【有料会員用】お気に入り表示・登録コントローラー
+ */
 @Controller
 public class FavoriteController {
 	private final FavoriteRepository favoriteRepository;

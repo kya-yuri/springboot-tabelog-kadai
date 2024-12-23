@@ -6,6 +6,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+/**
+ * カテゴリ登録フォーム
+ */
 @Data
 public class CategoryRegisterForm {
 	// カテゴリ名

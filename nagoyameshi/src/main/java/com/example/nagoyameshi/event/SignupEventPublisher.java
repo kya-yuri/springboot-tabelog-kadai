@@ -5,6 +5,9 @@ import org.springframework.stereotype.Component;
 
 import com.example.nagoyameshi.entity.User;
 
+/**
+ * 会員登録用メール認証Publisherクラス
+ */
 @Component
 public class SignupEventPublisher {
      private final ApplicationEventPublisher applicationEventPublisher;

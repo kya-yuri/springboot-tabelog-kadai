@@ -8,6 +8,9 @@ import com.example.nagoyameshi.entity.Store;
 import com.example.nagoyameshi.entity.User;
 import com.example.nagoyameshi.repository.FavoriteRepository;
 
+/**
+ * お気に入り機能を処理するサービス
+ */
 @Service
 public class FavoriteService {
 	private final FavoriteRepository favoriteRepository;        
@@ -16,6 +19,11 @@ public class FavoriteService {
 		this.favoriteRepository = favoriteRepository;        
 	}     
     
+	/**
+	 * お気に入り登録
+	 * @param store	：店舗情報
+	 * @param user		：ユーザー
+	 */
 	@Transactional
 	public void create(Store store, User user) {
 		Favorite favorite = new Favorite();        

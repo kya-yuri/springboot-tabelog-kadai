@@ -28,6 +28,9 @@ import com.example.nagoyameshi.repository.StoreCategoryRepository;
 import com.example.nagoyameshi.repository.StoreRepository;
 import com.example.nagoyameshi.service.CategoryService;
 
+/**
+ * 【管理者用】カテゴリ表示・登録・編集コントローラー
+ */
 @Controller
 @RequestMapping("/admin/categories")
 public class AdminCategoryController {

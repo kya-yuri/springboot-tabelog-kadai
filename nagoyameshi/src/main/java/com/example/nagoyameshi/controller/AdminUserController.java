@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.nagoyameshi.entity.User;
 import com.example.nagoyameshi.repository.UserRepository;
 
+/**
+ * 【管理者用】ユーザー表示コントローラー
+ */
 @Controller
 @RequestMapping("/admin/users")
 public class AdminUserController {

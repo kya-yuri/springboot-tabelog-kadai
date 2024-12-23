@@ -8,6 +8,9 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+/**
+ * 予約内容入力フォーム
+ */
 @Data
 public class ReservationInputForm {
 	@NotNull(message = "予約日時を設定してください。")

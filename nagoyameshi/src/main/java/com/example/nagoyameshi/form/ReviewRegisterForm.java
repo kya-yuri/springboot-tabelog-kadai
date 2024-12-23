@@ -4,6 +4,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+/**
+ * レビュー登録フォーム
+ */
 @Data
 public class ReviewRegisterForm {
     @NotNull(message = "評価を選択してください。")

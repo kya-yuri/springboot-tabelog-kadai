@@ -29,6 +29,9 @@ import com.example.nagoyameshi.repository.StoreRepository;
 import com.example.nagoyameshi.security.UserDetailsImpl;
 import com.example.nagoyameshi.service.StoreService;
 
+/**
+ * 店舗表示コントローラー
+ */
 @Controller
 @RequestMapping("/stores")
 public class StoreController {

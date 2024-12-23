@@ -19,6 +19,9 @@ import com.example.nagoyameshi.form.UserEditForm;
 import com.example.nagoyameshi.repository.RoleRepository;
 import com.example.nagoyameshi.repository.UserRepository;
 
+/**
+ * ユーザー一般を処理するサービス
+ */
 @Service
 public class UserService {
 	private final UserRepository userRepository;
@@ -135,6 +138,18 @@ public class UserService {
     }
 	
     /**
+     * ユーザーを有効にする
+     * @param user	：対象のユーザー
+     */
+    @Transactional
+    public void enableUser(User user) {
+    	// ユーザーを有効にするかどうかをtrueにしてユーザーテーブルへ保存
+        user.setEnabled(true); 
+        userRepository.save(user);
+    } 
+    
+    // カスタムバリデーション
+    /**
      * メールアドレスが登録済みかどうかをチェックする
      * @param email	：メールアドレス
      * @return		：登録済みであればtrueを返す
@@ -152,17 +167,6 @@ public class UserService {
      */
     public boolean isSamePassword(String password, String passwordConfirmation) {
         return password.equals(passwordConfirmation);
-    } 
-    
-    /**
-     * ユーザーを有効にする
-     * @param user	：対象のユーザー
-     */
-    @Transactional
-    public void enableUser(User user) {
-    	// ユーザーを有効にするかどうかをtrueにしてユーザーテーブルへ保存
-        user.setEnabled(true); 
-        userRepository.save(user);
     } 
 
     /**

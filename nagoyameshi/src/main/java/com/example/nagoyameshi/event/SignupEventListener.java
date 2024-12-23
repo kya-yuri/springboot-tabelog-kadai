@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 import com.example.nagoyameshi.entity.User;
 import com.example.nagoyameshi.service.VerificationTokenService;
 
+/**
+ * 会員登録用メール認証Listenerクラス
+ */
 @Component
 public class SignupEventListener {
     private final VerificationTokenService verificationTokenService;    
@@ -19,7 +22,12 @@ public class SignupEventListener {
         this.verificationTokenService = verificationTokenService;        
         this.javaMailSender = mailSender;
     }
-
+    
+    /**
+     * 会員登録用認証メール送信
+     * （SignupEventクラスから通知を受けたときに実行される処理）
+     * @param resetPasswordEvent
+     */
     @EventListener
     private void onSignupEvent(SignupEvent signupEvent) {
         User user = signupEvent.getUser();

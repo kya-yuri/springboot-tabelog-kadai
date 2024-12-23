@@ -6,6 +6,9 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+/**
+ * 会員登録フォーム
+ */
 @Data
 public class SignupForm {
 	@NotBlank(message = "氏名を入力してください。")

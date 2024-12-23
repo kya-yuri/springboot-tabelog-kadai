@@ -1,6 +1,7 @@
 package com.example.nagoyameshi.controller;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -36,6 +37,9 @@ import com.example.nagoyameshi.security.UserDetailsImpl;
 import com.example.nagoyameshi.service.ReservationService;
 import com.example.nagoyameshi.service.StoreService;
 
+/**
+ * 【有料会員用】予約表示・登録コントローラー
+ */
 @Controller
 public class ReservationController {
 	private final ReservationRepository reservationRepository;   
@@ -68,7 +72,7 @@ public class ReservationController {
 						@PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.ASC) Pageable pageable, 
 						Model model) {
 		User user = userDetailsImpl.getUser();
-		Page<Reservation> reservationPage = reservationRepository.findByUserAndDateTimeGreaterThanOrderByCreatedAtDesc(user, LocalDateTime.now(), pageable);
+		Page<Reservation> reservationPage = reservationRepository.findByUserAndDateTimeGreaterThanOrderByCreatedAtDesc(user, LocalDateTime.now(ZoneId.of("Asia/Tokyo")), pageable);
         
 		model.addAttribute("reservationPage", reservationPage);         
         
@@ -110,7 +114,8 @@ public class ReservationController {
 						Model model,
 						@AuthenticationPrincipal UserDetailsImpl userDetailsImpl){   
 		Store store = storeRepository.getReferenceById(id);
-		Integer numberOfPeople = reservationInputForm.getNumberOfPeople();   
+		Integer numberOfPeople = reservationInputForm.getNumberOfPeople();
+		LocalDateTime reserveDateTime = reservationInputForm.getReserveDateTime();
 		Integer capacity = store.getCapacity();
         
 		// カスタムバリデーション
@@ -119,7 +124,13 @@ public class ReservationController {
 				FieldError fieldError = new FieldError(bindingResult.getObjectName(), "numberOfPeople", "予約人数が席数を超えています。");
 				bindingResult.addError(fieldError);                
 			}            
-		}         
+		}
+		if (reserveDateTime != null) {
+			if (!reservationService.checkDateTime(reserveDateTime)) {
+				FieldError fieldError = new FieldError(bindingResult.getObjectName(), "reserveDateTime", "予約可能時間を過ぎています。");
+				bindingResult.addError(fieldError);  
+			}
+		}
         
 		// エラー処理
 		if (bindingResult.hasErrors()) {            

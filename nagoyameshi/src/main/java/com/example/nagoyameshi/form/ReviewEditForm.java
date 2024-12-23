@@ -5,6 +5,9 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+/**
+ * レビュー編集フォーム
+ */
 @Data
 @AllArgsConstructor
 public class ReviewEditForm {

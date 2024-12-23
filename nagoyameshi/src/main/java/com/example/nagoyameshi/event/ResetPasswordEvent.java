@@ -6,6 +6,9 @@ import com.example.nagoyameshi.entity.User;
 
 import lombok.Getter;
 
+/**
+ * パスワード再設定用メール認証Eventクラス
+ */
 @Getter
 public class ResetPasswordEvent extends ApplicationEvent {
     private User user;

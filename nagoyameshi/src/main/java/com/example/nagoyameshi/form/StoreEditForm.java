@@ -14,6 +14,9 @@ import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+/**
+ * 店舗情報編集フォーム
+ */
 @Data
 @AllArgsConstructor
 public class StoreEditForm {

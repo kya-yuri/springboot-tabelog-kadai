@@ -5,6 +5,9 @@ import org.springframework.stereotype.Component;
 
 import com.example.nagoyameshi.entity.User;
 
+/**
+ * パスワード再設定用メール認証Publisherクラス
+ */
 @Component
 public class ResetPasswordEventPublisher {
      private final ApplicationEventPublisher applicationEventPublisher;

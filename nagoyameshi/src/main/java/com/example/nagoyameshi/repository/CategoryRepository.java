@@ -8,13 +8,20 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.nagoyameshi.entity.Category;
 
+/**
+ * カテゴリ用リポジトリ
+ */
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
+
 	/**
 	 * カテゴリ名でカテゴリを検索→【管理者用】カテゴリ一覧ページ
 	 * @param keyword	：カテゴリ名のキーワード
+	 * @param pageable
+	 * @return
 	 */
 	Page<Category> findByNameLike(String keyword, Pageable pageable);
 	
+
 	/**
 	 * 更新が新しい順に20件カテゴリを表示→opページ
 	 * @return

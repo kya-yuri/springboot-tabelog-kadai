@@ -19,6 +19,9 @@ import com.stripe.param.SubscriptionListParams;
 
 import jakarta.annotation.PostConstruct;
 
+/**
+ * Stripeを処理するサービス
+ */
 @Service
 public class StripeService {
 	// Stripeのシークレットキーを取得
@@ -169,7 +172,7 @@ public class StripeService {
     /**
      *  サブスクリプション（StripeのSubscriptionオブジェクト）をキャンセルする
      * @param subscriptions		：Subscriptionオブジェクトのリスト
-     * @throws StripeException	：Stripeの例外処理
+     * @throws StripeException		：Stripeの例外処理
      */
     public void cancelSubscriptions(List<Subscription> subscriptions) throws StripeException {
     	// リストの要素の数だけ繰り返し処理を行い、その要素をキャンセルする

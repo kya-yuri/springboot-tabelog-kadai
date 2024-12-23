@@ -17,7 +17,10 @@ import com.example.nagoyameshi.form.UserEditForm;
 import com.example.nagoyameshi.repository.UserRepository;
 import com.example.nagoyameshi.security.UserDetailsImpl;
 import com.example.nagoyameshi.service.UserService;
- 
+
+/**
+ * 会員情報の表示・編集コントローラー
+ */
 @Controller
 @RequestMapping("/user")
 public class UserController {

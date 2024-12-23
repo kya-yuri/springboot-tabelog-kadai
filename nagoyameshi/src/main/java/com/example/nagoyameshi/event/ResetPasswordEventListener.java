@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 import com.example.nagoyameshi.entity.User;
 import com.example.nagoyameshi.service.VerificationTokenService;
 
+/**
+ * パスワード再設定用メール認証Listenerクラス
+ */
 @Component
 public class ResetPasswordEventListener {
     private final VerificationTokenService verificationTokenService;    
@@ -19,7 +22,12 @@ public class ResetPasswordEventListener {
         this.verificationTokenService = verificationTokenService;        
         this.javaMailSender = mailSender;
     }
-
+    
+    /**
+     * パスワード再設定用認証メール送信
+     * （ResetAPsswordSignupEventクラスから通知を受けたときに実行される処理）
+     * @param resetPasswordEvent
+     */
     @EventListener
     private void onResetPasswordEvent(ResetPasswordEvent resetPasswordEvent) {
         User user = resetPasswordEvent.getUser();

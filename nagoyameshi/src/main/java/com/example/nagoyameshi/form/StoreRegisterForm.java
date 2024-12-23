@@ -13,6 +13,9 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 
+/**
+ * 店舗登録フォーム
+ */
 @Data
 public class StoreRegisterForm {
 	@NotBlank(message = "店名を入力してください。")

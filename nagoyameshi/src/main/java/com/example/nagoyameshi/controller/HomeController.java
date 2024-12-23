@@ -12,6 +12,9 @@ import com.example.nagoyameshi.entity.Store;
 import com.example.nagoyameshi.repository.CategoryRepository;
 import com.example.nagoyameshi.repository.StoreRepository;
 
+/**
+ * トップページ表示コントローラー
+ */
 @Controller
 public class HomeController {
 	private final StoreRepository storeRepository;

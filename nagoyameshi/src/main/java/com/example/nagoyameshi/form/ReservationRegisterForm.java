@@ -5,6 +5,9 @@ import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+/**
+ * 予約内容登録フォーム
+ */
 @Data
 @AllArgsConstructor
 public class ReservationRegisterForm {

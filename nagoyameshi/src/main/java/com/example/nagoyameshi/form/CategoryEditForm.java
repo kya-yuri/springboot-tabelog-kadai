@@ -8,6 +8,9 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+/**
+ * カテゴリ編集フォーム
+ */
 @Data
 @AllArgsConstructor
 public class CategoryEditForm {

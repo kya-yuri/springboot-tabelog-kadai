@@ -21,6 +21,9 @@ import com.stripe.model.Customer;
 import com.stripe.model.PaymentMethod;
 import com.stripe.model.Subscription;
 
+/**
+ * 【無料会員用】サブスク登録・【有料会員用】サブスク変更・解約コントローラー
+ */
 @Controller
 @RequestMapping("/subscription")
 public class SubscriptionController {

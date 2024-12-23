@@ -26,6 +26,9 @@ import com.example.nagoyameshi.repository.StoreRepository;
 import com.example.nagoyameshi.security.UserDetailsImpl;
 import com.example.nagoyameshi.service.ReviewService;
 
+/**
+ * レビュー表示・【有料会員用】レビュー登録・編集コントローラー
+ */
 @Controller
 @RequestMapping("/stores/{storeId}/reviews")
 public class ReviewController {

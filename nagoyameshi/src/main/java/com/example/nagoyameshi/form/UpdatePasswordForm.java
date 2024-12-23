@@ -7,6 +7,9 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+/**
+ * パスワード再設定フォーム
+ */
 @Data
 @AllArgsConstructor
 public class UpdatePasswordForm {

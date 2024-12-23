@@ -6,6 +6,9 @@ import com.example.nagoyameshi.entity.User;
 
 import lombok.Getter;
 
+/**
+ * 会員登録用メール認証Eventクラス
+ */
 @Getter
 public class SignupEvent extends ApplicationEvent {
     private User user;

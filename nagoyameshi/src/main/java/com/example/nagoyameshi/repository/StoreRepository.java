@@ -9,21 +9,31 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.example.nagoyameshi.entity.Store;
 
+/**
+ * 店舗情報を管理するリポジトリ
+ */
 public interface StoreRepository extends JpaRepository<Store, Integer> {
+
 	/**
 	 * 店名で店舗検索→【管理者用】店舗一覧ページ
 	 * @param keyword	：店名のキーワード
+	 * @param pageable
+	 * @return
 	 */
 	Page<Store> findByNameLike(String keyword, Pageable pageable);
 	
 	/**
 	 * 新着順、全件表示→店舗一覧ページ
+	 * @param pageable
+	 * @return
 	 */
 	Page<Store> findAllByOrderByCreatedAtDesc(Pageable pageable);
 	
 	/**
 	 * 新着順、店名またはカテゴリ名で検索して表示→店舗一覧ページ
 	 * @param keyword	：店名またはカテゴリ名のキーワード
+	 * @param pageable
+	 * @return
 	 */
     @Query("""
             SELECT DISTINCT s FROM Store s
@@ -34,10 +44,12 @@ public interface StoreRepository extends JpaRepository<Store, Integer> {
     """)
     Page<Store> findStoresByKeywordOrderByCreatedAtDesc(String keyword, Pageable pageable);
 
-	/**
-	 * 新着順、カテゴリ名で特定して表示→店舗一覧ページ
-	 * @param seachCategoryId	：カテゴリID
-	 */
+    /**
+     * 新着順、カテゴリ名で特定して表示→店舗一覧ページ
+     * @param seachCategoryId	：カテゴリID
+     * @param pageable
+     * @return
+     */
     @Query("""
             SELECT DISTINCT s FROM Store s
             LEFT JOIN StoreCategory sc ON s.id = sc.store.id
@@ -49,12 +61,16 @@ public interface StoreRepository extends JpaRepository<Store, Integer> {
 
     /**
      * 価格が安い順、全件表示→店舗一覧ページ
+     * @param pageable
+     * @return
      */
     Page<Store> findAllByOrderByMinPriceAsc(Pageable pageable);
     
     /**
      * 価格が安い順、店名またはカテゴリ名で検索して表示→店舗一覧ページ
      * @param keyword	：店名またはカテゴリ名のキーワード
+     * @param pageable
+     * @return
      */
     @Query("""
             SELECT DISTINCT s FROM Store s
@@ -80,6 +96,8 @@ public interface StoreRepository extends JpaRepository<Store, Integer> {
     
     /**
      * レビューの平均スコアが高い順、全件表示→店舗一覧ページ
+     * @param pageable
+     * @return
      */
     @Query("""
             SELECT DISTINCT s FROM Store s
@@ -94,6 +112,8 @@ public interface StoreRepository extends JpaRepository<Store, Integer> {
     /**
      * レビューの平均スコアが高い順、店名またはカテゴリ名で検索して表示→店舗一覧ページ
      * @param keyword	：店名またはカテゴリ名のキーワード
+     * @param pageable
+     * @return
      */
     @Query("""
             SELECT DISTINCT s FROM Store s
@@ -109,6 +129,8 @@ public interface StoreRepository extends JpaRepository<Store, Integer> {
     /**
      * レビューの平均スコアが高い順、カテゴリ名で特定して表示→店舗一覧ページ
      * @param seachCategoryId	：カテゴリID
+     * @param pageable
+     * @return
      */
     @Query("""
             SELECT DISTINCT s FROM Store s
@@ -123,6 +145,7 @@ public interface StoreRepository extends JpaRepository<Store, Integer> {
     
     /**
      * 全店舗のレビューの平均スコアを取得→店舗一覧ページでレビューの平均値を参照するため
+     * @return
      */
     @Query("""
             SELECT s, AVG(r.score) AS averageScore
